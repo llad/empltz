@@ -1,8 +1,34 @@
-var http = require('http');
+var http = require('http'),
+    sys = require('sys'),
+    url = require('url'),
+    path = require('path'),
+    fs = require('fs');
   
 var server = http.createServer(function (req, res) {
-  res.writeHead(200, { "Content-Type": "text/plain" })
-  res.end("Hello world\n");
+    var uri = url.parse(request.url).pathname;
+    var filename = path.join(process.cwd(), uri);
+    path.exists(filename, function(exists) {
+        if(!exists) {
+            res.sendHeader(404, {"Content-Type": "text/plain"});
+            res.write("404 Not Found\n");
+            res.close();
+            return;
+        }
+    }
+    
+    fs.readFile(filename, "binary", function(err, file) {
+        if(err) {
+            res.sendHeader(500, {"Content-Type": "text/plain"});  
+            res.write(err + "\n");
+            res.close();  
+            return;  
+        }  
+
+        res.sendHeader(200);  
+        res.write(file, "binary");  
+        res.close();  
+    });
+        
 });
   
 server.listen(process.env.PORT || 8001);
