@@ -24,7 +24,7 @@ var server = http.createServer(function (req, res) {
             return;  
         }  
 
-        res.sendHeader(200);  
+        res.writeHead(200);  
         res.write(file, "binary");  
         res.close();  
     });
