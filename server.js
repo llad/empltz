@@ -11,7 +11,7 @@ var server = http.createServer(function (req, res) {
         if(!exists) {
             res.writeHead(404, {"Content-Type": "text/plain"});
             res.write("404 Not Found\n");
-            res.close();
+            res.end();
             return;
         }
     });
@@ -20,13 +20,13 @@ var server = http.createServer(function (req, res) {
         if(err) {
             res.writeHead(500, {"Content-Type": "text/plain"});  
             res.write(err + "\n");
-            res.close();  
+            res.end();  
             return;  
         }  
 
         res.writeHead(200);  
         res.write(file, "binary");  
-        res.close();  
+        res.end();  
     });
         
 });
