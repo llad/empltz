@@ -9,7 +9,7 @@ var server = http.createServer(function (req, res) {
     var filename = path.join(process.cwd(), uri);
     path.exists(filename, function(exists) {
         if(!exists) {
-            res.sendHeader(404, {"Content-Type": "text/plain"});
+            res.writeHead(404, {"Content-Type": "text/plain"});
             res.write("404 Not Found\n");
             res.close();
             return;
@@ -18,7 +18,7 @@ var server = http.createServer(function (req, res) {
     
     fs.readFile(filename, "binary", function(err, file) {
         if(err) {
-            res.sendHeader(500, {"Content-Type": "text/plain"});  
+            res.writeHead(500, {"Content-Type": "text/plain"});  
             res.write(err + "\n");
             res.close();  
             return;  
