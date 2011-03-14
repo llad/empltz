@@ -1,0 +1,23 @@
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Editing <%= plt.name %></h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<form method="post" accept-charset="utf-8">
+		    <input type="hidden" value="put" name="_method" />
+			<div data-role="fieldcontain">
+			    <label for="name">Name:</label>
+			    <input type="text" name="name" id="name" value="<%= plt.name %>"  />
+				<label for="template">Template:</label>
+			    <input type="text" name="template" id="template" value="<%= plt.template %>"  />
+			</div>
+			<button type="submit" data-theme="a" name="submit" value="submit-value">Save</button>
+		</form>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /header -->
+</div><!-- /page -->

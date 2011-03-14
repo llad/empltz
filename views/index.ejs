@@ -7,13 +7,17 @@
 	</div><!-- /header -->
 
 	<div data-role="content">	
-		<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b"> 
-			<li data-role="list-divider">Email Templates</li> 
-			<li><a href="mailto:homein5@onmachine.org?subject=Home%20in%205&amp;body=Lvoe" class="ui-link-inherit">Home in 5</a></li> 
-			<li><a href="mailto:runninglate@onmachine.org?subject=Running%20late&amp;body=Lvoe" class="ui-link-inherit">Running Late</a></li> 
+		<ul data-role="listview" data-inset="true" data-split-icon="gear" data-split-theme="c" data-dividertheme="b" data-split-icon="gear"> 
+			<li data-role="list-divider">Email Templates</li>
+			<% pltz.forEach(function(plt, id){ %>
+				<li>
+					<a href="mailto:<%= plt.template %>"><%= plt.name %></a>
+					<a href="/<%= id %>/edit" data-rel="dialog" data-transition="pop"></a>
+				</li>
+			<% }) %>
+			<li data-theme="a"><a href="#Add">Add</a></li>
 		</ul>
-		
-		<p>View internal page called <a href="#bar">bar</a></p>	
+
 	</div><!-- /content -->
 
 	<div data-role="footer">
@@ -21,17 +25,28 @@
 	</div><!-- /header -->
 </div><!-- /page -->
 
-
 <!-- Start of second page -->
-<div data-role="page" id="bar">
+<div data-role="page" id="Add">
 
 	<div data-role="header">
-		<h1>Bar</h1>
+		<h1>Edit</h1>
 	</div><!-- /header -->
 
-	<div data-role="content">	
-		<p>I'm first in the source order so I'm shown as the page.</p>		
-		<p><a href="#foo">Back to foo</a></p>	
+	<div data-role="content">
+		<form action="index_submit" method="post" accept-charset="utf-8">
+			<div data-role="fieldcontain">
+			    <label for="to">To:</label>
+			    <input type="email" name="to" id="to" value=""  />
+				<label for="subject">Subject:</label>
+			    <input type="text" name="subject" id="subject" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+			    <label for="body">Body</label>
+			    <textarea name="body" id="body"></textarea>
+			</div>
+
+			<button type="submit" data-theme="a" name="submit" value="submit-value">Submit</button>
+		</form>
 	</div><!-- /content -->
 
 	<div data-role="footer">

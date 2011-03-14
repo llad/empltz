@@ -3,7 +3,9 @@
  * Module dependencies.
  */
 
-var express = require('express');
+var express = require('express'),
+    pltz = require('./pltz');
+
 
 var app = module.exports = express.createServer();
 
@@ -30,11 +32,13 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res){
-  res.render('index', {
-    title: 'empltz'
-  });
-});
+app.get('/', pltz.list);
+// app.get('/:id/:op?', pltz.load);
+// app.get('/:id', pltz.view);
+// app.get('/:id/view', pltz.view);
+app.get('/:id/edit', pltz.edit);
+// app.put('/:id/edit', pltz.update);
+
 
 // Only listen on $ node app.js
 
