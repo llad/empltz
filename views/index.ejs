@@ -12,7 +12,7 @@
 			<% pltz.forEach(function(plt, id){ %>
 				<li>
 					<a href="mailto:<%= plt.template %>"><%= plt.name %></a>
-					<a href="/<%= id %>/edit" data-rel="dialog" data-transition="pop"></a>
+					<a href="/<%= plt._id %>/edit" data-rel="dialog" data-transition="pop"></a>
 				</li>
 			<% }) %>
 			<li data-theme="a"><a href="#Add">Add</a></li>

@@ -5,19 +5,19 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-		<form method="post" accept-charset="utf-8">
+		<form method="post" action="/<%= plt.id %>/edit" accept-charset="utf-8">
 		    <input type="hidden" value="put" name="_method" />
 			<div data-role="fieldcontain">
 			    <label for="name">Name:</label>
-			    <input type="text" name="name" id="name" value="<%= plt.name %>"  />
+			    <input type="text" name="plt[name]" id="name" value="<%= plt.name %>"  />
 				<label for="template">Template:</label>
-			    <input type="text" name="template" id="template" value="<%= plt.template %>"  />
+			    <input type="text" name="plt[template]" id="template" value="<%= plt.template %>"  />
 			</div>
-			<button type="submit" data-theme="a" name="submit" value="submit-value">Save</button>
+			<button type="submit" value="Save" data-theme="a" >Save</button>
 		</form>
 	</div><!-- /content -->
 
 	<div data-role="footer">
-		<h4>Page Footer</h4>
+		<h4>Forking Spoon</h4>
 	</div><!-- /header -->
 </div><!-- /page -->

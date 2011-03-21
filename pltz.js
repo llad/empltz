@@ -7,29 +7,27 @@ var pltz = [
 
 exports.list = function(req, res){
   res.render('index', { title: 'empltz', pltz: pltz });
-  console.log(pltz[0]);
 };
 
 // exports.load = function(req, res, next){
 //   var id = req.params.id;
 //   req.plt = pltz[id];
+//   if (typeof(id) === 'number') {
+//       req.plt.id = id;
+//       console.log('HELLO HERE IS THIS THING'+ req.plt.id);    
+//   } 
 //   if (req.plt) {
 //     next();
 //   } else {
-//       next(new Error('cannot find user ' + id));
-//       
+//       next(new Error('cannot find user ' + id));  
 //   }
 // };
 
 exports.edit = function(req, res){
-    var id = req.params.id;
-    console.log(pltz[id]);
-    plt = pltz[id];
     res.render('edit', {
-      title: 'Editing user ',
-      plt: plt,
-      pltz: pltz
-      });
+        title: 'Editing user ',
+        plt: req.plt
+    });
 };
 
 
@@ -42,11 +40,11 @@ exports.edit = function(req, res){
 // };
 // 
 
-// exports.update = function(req, res){
-//   // Normally you would handle all kinds of
-//   // validation and save back to the db
-//   var user = req.body.user;
-//   req.user.name = user.name;
-//   req.user.email = user.email;
-//   res.redirect('back');
-// };
+
+exports.update = function(req, res){
+    var plt = req.body.plt;
+    console.log(req.plt)
+    req.plt.name = plt.name;
+    req.plt.template = plt.template;
+    res.redirect('back');
+};
