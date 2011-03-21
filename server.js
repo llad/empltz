@@ -39,7 +39,7 @@ app.configure('production', function(){
 // ];
 
 
-GLOBAL.DEBUG = true;
+//GLOBAL.DEBUG = true;
 
 sys = require("sys");
 test = require("assert");
