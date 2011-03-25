@@ -54,7 +54,7 @@ var host = process.env.MONGO_NODE_DRIVER_HOST != null ? process.env.MONGO_NODE_D
 var port = process.env.MONGO_NODE_DRIVER_PORT != null ? process.env.MONGO_NODE_DRIVER_PORT : Connection.DEFAULT_PORT;
 
 sys.puts("Connecting to " + host + ":" + port);
-var db = new Db('node-mongo-examples', new Server(host, port, {}), {native_parser:true});
+var db = new Db('node-mongo-examples', new Server(host, port, {}), {native_parser:false});
 
 
 
