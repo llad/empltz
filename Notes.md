@@ -24,6 +24,20 @@ ssh
 ---
 ssh node@templay.no.de
 
+start manually
+--------------
+If service won't work, just start manually:
+/home/node/local/nodejs/bin/node /home/node/node-service/current/server.js
+
+Starting Mongo
+------------------
+export LD_LIBRARY_PATH=mongo-extra-64
+/home/node/mongodb-sunos5-x86_64-1.8.0/bin/mongod --dbpath ~/mongo
+./bin/mongod --dbpath ~/mongo --fork --logpath ~/mongodb.log --logappend
+
+
+
+
 Mongo
 =====
 
