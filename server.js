@@ -4,10 +4,42 @@
  */
 
 var express = require('express'),
-    pltz = require('./pltz');
+    pltz = require('./pltz'),
+    openid = require('openid'),
+    url = require('url'),
+    querystring = require('querystring');
 
 
 var app = module.exports = express.createServer();
+
+var extensions = [new openid.UserInterface(), 
+                  new openid.SimpleRegistration(
+                      {
+                        "nickname" : false, 
+                        "email" : true, 
+                        "fullname" : false,
+                        "dob" : false, 
+                        "gender" : false, 
+                        "postcode" : false,
+                        "country" : false, 
+                        "language" : false, 
+                        "timezone" : false
+                      }),
+                  new openid.AttributeExchange(
+                      {
+                        "http://axschema.org/contact/email": "required",
+                        "http://axschema.org/namePerson/friendly": "required",
+                        "http://axschema.org/namePerson": "required"
+                      })];
+
+var relyingParty = new openid.RelyingParty(
+    'http://templay.no.de/verify', // Verification URL (yours)
+    null, // Realm (optional, specifies realm for OpenID authentication)
+    false, // Use stateless verification
+    false, // Strict mode
+    extensions); // List of extensions to enable and include
+
+
 
 // Configuration
 
@@ -54,7 +86,7 @@ var host = process.env.MONGO_NODE_DRIVER_HOST != null ? process.env.MONGO_NODE_D
 var port = process.env.MONGO_NODE_DRIVER_PORT != null ? process.env.MONGO_NODE_DRIVER_PORT : Connection.DEFAULT_PORT;
 
 sys.puts("Connecting to " + host + ":" + port);
-var db = new Db('node-mongo-examples', new Server(host, port, {}), {native_parser:false});
+var db = new Db('node-mongo-examples', new Server(host, port, {}));
 
 
 
@@ -131,6 +163,46 @@ app.put('/:id/edit', function(req, res){
     req.plt.name = plt.name;
     req.plt.template = plt.template;
     res.redirect('back');
+});
+
+app.get('/login', function(req, res) {
+    res.render('login', { title: 'login'});
+});
+
+
+app.get('/authenticate', function(req, res) {
+    
+    var parsedUrl = url.parse(req.url);
+    var query = querystring.parse(parsedUrl.query);
+    var identifier = query.openid_identifier;
+    relyingParty.authenticate(identifier, false, function(authUrl) {
+        if (!authUrl)
+        {
+            res.writeHead(500);
+            res.end(error);
+        }
+        else
+        {
+            res.redirect(authUrl);
+            // res.writeHead(302, { Location: authUrl });
+            // res.end();
+        }
+    });
+});
+
+app.get('/verify', function(req, res) {
+    relyingParty.verifyAssertion(req, function(result)
+    {
+      // Result contains properties:
+      // - authenticated (true/false)
+      // - error (message, only if not authenticated)
+      // - answers from any extensions (e.g. 
+      //   "http://axschema.org/contact/email" if requested 
+      //   and present at provider)
+      res.writeHead(200);
+      res.end((result.authenticated ? 'Success :)' : 'Failure :(') +
+        '\n\n' + JSON.stringify(result));
+    });
 });
 
 

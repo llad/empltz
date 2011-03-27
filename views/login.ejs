@@ -1,0 +1,26 @@
+<div data-role="page">
+
+	<div data-role="header">
+		<h1><%= title %></h1>
+		<script type="text/javascript">
+			$(document).bind("mobileinit", function(){
+				$.extend(  $.mobile, { ajaxFormsEnabled: false });
+			});
+		</script>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<form method="get" action="/authenticate">
+			<div data-role="fieldcontain">
+			    <label for="openid">OpenID:</label>
+			    <input type="text" name="openid_identifier" id="openid" />
+
+			</div>
+			<button type="submit" value="Login" data-theme="a" >Login</button>
+		</form>
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Forking Spoon</h4>
+	</div><!-- /header -->
+</div><!-- /page -->
